@@ -1,0 +1,22 @@
+{% extends "news/base.html" %}
+
+{% block content %}
+    <div>
+        {% for post in posts %}
+            <div class="card m-3 ms-5">
+                <div class="card-header">
+                    <a href="{% url 'detailed' post.id %}" class="card-title fs-3" style="text-decoration: none;">{{ post.title }}</a>
+                    <P class="blockquote fs-6" style="float:right"> <cite>{{ post.author }}</cite> <cite title="Source Title">{{ post.date_posted|date:'F d Y' }}</cite></P>
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p class="card-text">{{ post.content }}</p>
+
+                    </blockquote>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
