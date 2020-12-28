@@ -19,6 +19,7 @@ from users import views as u_views
 from django.contrib.auth import views as a_views
 from django.conf import settings
 from django.conf.urls.static import static
+from voting import views as v_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +27,8 @@ urlpatterns = [
     path('register', u_views.register, name='register'),
     path('login/', a_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout', a_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-    path('profile', u_views.profile, name='profile')
+    path('profile', u_views.profile, name='profile'),
+    path('voting', v_views.voting, name='voting')
 ]
 
 

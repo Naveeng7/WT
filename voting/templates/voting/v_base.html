@@ -1,0 +1,35 @@
+{% extends "news/base.html" %}
+
+{% block content %}
+    <div>
+        <h1>is it working</h1>
+        <select class="form-select" aria-label="Default select example">
+            <option>Select the Position</option>
+            {% for pos in positions %}
+                <option>{{ pos }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-secondary" type="submit" >Submit</button>
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col">Positions</th>
+                      <th scope="col">candidates</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for can in candidates %}
+
+                          <tr>
+                              <td>pos</td>
+                              <td>{{  can }}</td>
+                          </tr>
+
+                  {% endfor %}
+                  </tbody>
+                </table>
+        </div>
+    </div>
+{% endblock %}
