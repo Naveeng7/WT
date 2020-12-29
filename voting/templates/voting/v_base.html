@@ -1,40 +1,44 @@
 {% extends "news/base.html" %}
 
 {% block content %}
-    <div>
+    <div class="m-4 d-flex justify-content-center">
         <form method = "POST" action = "{% url 'voting' %}">
             {% csrf_token %}
-            <option disabled>Choose the Position: </option>
-            <select name = "drop1" >
+            <select name = "drop1">
+                <option selected disabled>Choose Position </option>
                 {% for pos in positions %}
-                    <option value="{{ pos.pname }}">{{ pos.pname }}</option>
+                    <option value="{{ pos.pname }}">{{ pos.pname|capfirst }}</option>
                 {% endfor %}
             </select>
             <input  type = "submit" value="Submit">
-            <h1>{{ val }}</h1>
         </form>
+    </div>
 
-
-        <div>
-            <table class="table">
-                <thead>
-                    <tr>
-                      <th scope="col">Positions</th>
-                      <th scope="col">candidates</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for can in candidates %}
-                        {% if val == can.pname %}
-                          <tr>
-                              <td>{{ can.id }}</td>
-                              <td>{{  can.pname }}</td>
-                          </tr>
-                        {% endif %}
-                  {% endfor %}
+        <div class="mt-4">
+            <fieldset class="fs-3">The Currently selected Position in: {{ val|capfirst }}</fieldset>
+            <table class="table table-sm">
+                <div class="table-responsive">
+                    <table class=" table align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col ">Positions</th>
+                                <th scope="col">Candidates</th>
+                                <th scope="col">Vote this person</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-middle">
+                        {% for can in candidates %}
+                            {% if val == can.pname %}
+                            <tr class="align-middle" >
+                                <td>{{ can.id }}</td>
+                                <td>{{ can.cname|capfirst }}</td>
+                                <td> Vote me </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
 
                   </tbody>
                 </table>
         </div>
-    </div>
+
 {% endblock %}

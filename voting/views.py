@@ -4,6 +4,7 @@ from voting.models import candidates
 
 # Create your views here.
 def voting(request):
+    val = None
     if request.method == 'POST':
         val = request.POST['drop1']
         val = positions.objects.filter(pname=val).first()
