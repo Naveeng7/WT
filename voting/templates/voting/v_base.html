@@ -2,14 +2,18 @@
 
 {% block content %}
     <div>
-        <h1>is it working</h1>
-        <select class="form-select" aria-label="Default select example">
-            <option>Select the Position</option>
-            {% for pos in positions %}
-                <option>{{ pos }}</option>
-            {% endfor %}
-        </select>
-        <button class="btn btn-secondary" type="submit" >Submit</button>
+        <form method = "POST" action = "{% url 'voting' %}">
+            {% csrf_token %}
+            <option disabled>Choose the Position: </option>
+            <select name = "drop1" >
+                {% for pos in positions %}
+                    <option value="{{ pos.pname }}">{{ pos.pname }}</option>
+                {% endfor %}
+            </select>
+            <input  type = "submit" value="Submit">
+            <h1>{{ val }}</h1>
+        </form>
+
 
         <div>
             <table class="table">
@@ -21,13 +25,14 @@
                   </thead>
                   <tbody>
                   {% for can in candidates %}
-
+                        {% if val == can.pname %}
                           <tr>
-                              <td>pos</td>
-                              <td>{{  can }}</td>
+                              <td>{{ can.id }}</td>
+                              <td>{{  can.pname }}</td>
                           </tr>
-
+                        {% endif %}
                   {% endfor %}
+
                   </tbody>
                 </table>
         </div>
