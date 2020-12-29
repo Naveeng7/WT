@@ -8,6 +8,14 @@ class positions(models.Model):
     def __str__(self):
         return self.pname
 
+    def save(self, *args, **kwargs):
+        pvals = positions.objects.all()
+        for p in pvals:
+            if self.pname == p.pname:
+                return f'Position already exists {p}'
+        super(positions, self).save(*args, **kwargs)
+
+
 class candidates(models.Model):
     pname = models.ForeignKey(positions, on_delete=models.CASCADE)
     cname = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -15,3 +23,10 @@ class candidates(models.Model):
 
     def __str__(self):
         return f'{self.pname,self.cname,self.cvotes}'
+
+    def save(self, *args, **kwargs):
+        cvals = candidates.objects.all()
+        for c in cvals:
+            if c.cname == self.cname and c.pname == self.pname:
+                return f'The candidate { self.cname } is already standing for this position { self.pname }'
+        super(candidates, self).save(*args, **kwargs)
