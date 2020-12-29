@@ -30,3 +30,18 @@ class candidates(models.Model):
             if c.cname == self.cname and c.pname == self.pname:
                 return f'The candidate { self.cname } is already standing for this position { self.pname }'
         super(candidates, self).save(*args, **kwargs)
+
+
+class voted(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pname = models.ForeignKey(positions, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{ self.user } votes position { self.pname }'
+
+    def save(self,*args, **kwargs):
+        vvals = voted.objects.all()
+        for v in vvals:
+            if v.user == self.user and v.pname == self.pname:
+                return f'Ypu { self.user } have already voted for this position: { self.pname }'
+        super(voted, self).save(*args, **kwargs)
