@@ -47,4 +47,9 @@ class voted(models.Model):
                 #return messages.success(f'You { self.user } have already voted for this position: { self.pname }')
                 return f'You { self.user } have already voted for this position: { self.pname }'
         print('vote submitted')
+        pval = positions.objects.filter(pname=self.pname).first()
+        cval = User.objects.filter(username=self.user).first()
+        ceval = candidates.objects.filter(pname=pval, cname=cval).first()
+        print(pval,cval,ceval,ceval.id,ceval.cvotes)
+        candidates.objects.filter(id=ceval.id).update(cvotes = ceval.cvotes + 1)
         super(voted, self).save(*args, **kwargs)
