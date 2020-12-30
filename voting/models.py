@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your models here.
 class positions(models.Model):
@@ -43,5 +44,7 @@ class voted(models.Model):
         vvals = voted.objects.all()
         for v in vvals:
             if v.user == self.user and v.pname == self.pname:
-                return f'Ypu { self.user } have already voted for this position: { self.pname }'
+                #return messages.success(f'You { self.user } have already voted for this position: { self.pname }')
+                return f'You { self.user } have already voted for this position: { self.pname }'
+        print('vote submitted')
         super(voted, self).save(*args, **kwargs)
