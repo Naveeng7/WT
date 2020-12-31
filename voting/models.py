@@ -12,8 +12,9 @@ class positions(models.Model):
         pvals = positions.objects.all()
         for p in pvals:
             if self.pname == p.pname:
-                return f'Position already exists {p}'
+                return f'Position {p} already exists'
         super(positions, self).save(*args, **kwargs)
+        return f'{ self.pname } is successfully added to positions'
 
 
 class candidates(models.Model):
@@ -29,8 +30,8 @@ class candidates(models.Model):
         for c in cvals:
             if c.cname == self.cname and c.pname == self.pname:
                 return f'The candidate { self.cname } is already standing for this position { self.pname }'
-        print('candidates {} is competing for the position {}'.format(self.cname, self.pname))
         super(candidates, self).save(*args, **kwargs)
+        return f'candidates { self.cname } is competing for the position { self.pname }'
 
 
 class voted(models.Model):

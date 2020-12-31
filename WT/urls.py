@@ -28,7 +28,8 @@ urlpatterns = [
     path('login/', a_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout', a_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile', u_views.profile, name='profile'),
-    path('voting', v_views.voting, name='voting')
+    path('voting', v_views.voting, name='voting'),
+    path('vadmin', v_views.vadmin, name='vadmin')
 ]
 
 
