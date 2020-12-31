@@ -30,6 +30,7 @@ class candidates(models.Model):
         for c in cvals:
             if c.cname == self.cname and c.pname == self.pname:
                 return f'The candidate { self.cname } is already standing for this position { self.pname }'
+        print('candidates {} is competing for the position {}'.format(self.cname, self.pname))
         super(candidates, self).save(*args, **kwargs)
 
 
@@ -44,12 +45,7 @@ class voted(models.Model):
         vvals = voted.objects.all()
         for v in vvals:
             if v.user == self.user and v.pname == self.pname:
-                #return messages.success(f'You { self.user } have already voted for this position: { self.pname }')
                 return f'You { self.user } have already voted for this position: { self.pname }'
         print('vote submitted')
-        pval = positions.objects.filter(pname=self.pname).first()
-        cval = User.objects.filter(username=self.user).first()
-        ceval = candidates.objects.filter(pname=pval, cname=cval).first()
-        print(pval,cval,ceval,ceval.id,ceval.cvotes)
-        candidates.objects.filter(id=ceval.id).update(cvotes = ceval.cvotes + 1)
         super(voted, self).save(*args, **kwargs)
+        return True
