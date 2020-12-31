@@ -3,8 +3,10 @@ from voting.models import positions
 from voting.models import candidates
 from django.contrib.auth.models import User
 from voting.models import voted
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required()
 def voting(request):
     pval = None
     ceval = None
