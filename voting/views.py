@@ -94,8 +94,8 @@ def cdel(request):
     ceval = None
     msg = ''
     if request.method == 'POST':
-        if 'posval' in request.POST:
-            pval = request.POST['posval']
+        if 'candel' in request.POST:
+            pval = request.POST['candel']
             pval = positions.objects.filter(pname=pval).first()
         if 'canval' in request.POST:
             pval = request.POST['posval']
@@ -103,15 +103,35 @@ def cdel(request):
             cval = request.POST['canval']
             cval = User.objects.filter(username=cval).first()
             ceval = candidates.objects.filter(pname=pval, cname=cval).first()
-            voter = request.POST['voter']
-            voter = User.objects.filter(username=voter).first()
-
-
+            ceval.delete()
+            msg = f'{ cval } is removed from the position { pval }'
 
     context = {
         'positions': positions.objects.all(),
         'candidates': candidates.objects.all(),
-        'users': User.objects.all(),
+        'pval': pval,
+        'ceval': ceval,
         'msg': msg
     }
+
     return render(request, 'voting/cdel.html', context)
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def cres(request):
+    canpos = None
+    msg = ''
+    if request.method == 'POST':
+        if 'canpos' in request.POST:
+            canpos = request.POST['canpos']
+            canpos = positions.objects.filter(pname=canpos).first()
+
+    context = {
+        'positions': positions.objects.all(),
+        'candidates': candidates.objects.all(),
+        'canpos': canpos,
+        'msg': msg
+    }
+
+    return render(request, 'voting/cres.html', context)

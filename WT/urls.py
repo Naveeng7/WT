@@ -31,7 +31,8 @@ urlpatterns = [
     path('voting', v_views.voting, name='voting'),
     path('addndel', v_views.mpos, name='addndel'),
     path('cadd', v_views.cadd, name='addcand'),
-    path('cdel', v_views.cdel, name='delcand')
+    path('cdel', v_views.cdel, name='delcand'),
+    path('pollres', v_views.cres, name='rescand')
 ]
 
 

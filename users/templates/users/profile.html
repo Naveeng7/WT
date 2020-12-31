@@ -9,14 +9,15 @@
             </div>
             <div class="col-8 border border-danger">
                 <div class="container">
-                    <h2>User Name: {{ user.username }}</h2>
-                    <h3>Voter Id: {{ user.profile.voter_id }}</h3>
+                    <h2>User Name: {{ user.username|capfirst }}</h2>
+                    <h2>Voter Id: {{ user.profile.voter_id }}</h2>
                     <h4>Email: {{ user.email }}</h4>
                 </div>
             </div>
         </div>
         </div>
     </div>
+    <div class= "mt-3 d-flex justify-content-center">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -28,7 +29,7 @@
                 <button class="btn btn-outline-info" type="submit">Update</button>
             </div>
         </form>
-
+    </div>
 
 
 
