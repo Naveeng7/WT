@@ -44,7 +44,7 @@ def voting(request):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def vadmin(request):
+def mpos(request):
     msg = ''
     if request.method == 'POST':
         if 'posval' in request.POST:
@@ -56,6 +56,20 @@ def vadmin(request):
             pval = request.POST['posadd']
             pval = positions(pname=pval)
             msg = pval.save()
+
+    context = {
+        'positions': positions.objects.all(),
+        'candidates': candidates.objects.all(),
+        'users': User.objects.all(),
+        'msg': msg
+    }
+    return render(request, 'voting/mpos.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def cadd(request):
+    msg = ''
+    if request.method == 'POST':
         if 'canadd' in request.POST:
             pval = request.POST['canadd']
             pval = positions.objects.filter(pname=pval).first()
@@ -63,14 +77,35 @@ def vadmin(request):
             cval = User.objects.filter(username=cval).first()
             ceval = candidates(pname=pval, cname=cval)
             msg = ceval.save()
-        if 'candel' in request.POST:
-            pval = request.POST['candel']
+
+    context = {
+        'positions': positions.objects.all(),
+        'candidates': candidates.objects.all(),
+        'users': User.objects.all(),
+        'msg': msg
+    }
+    return render(request, 'voting/cadd.html', context)
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def cdel(request):
+    pval = None
+    ceval = None
+    msg = ''
+    if request.method == 'POST':
+        if 'posval' in request.POST:
+            pval = request.POST['posval']
             pval = positions.objects.filter(pname=pval).first()
-            cval = request.POST['canddel']
+        if 'canval' in request.POST:
+            pval = request.POST['posval']
+            pval = positions.objects.filter(pname=pval).first()
+            cval = request.POST['canval']
             cval = User.objects.filter(username=cval).first()
             ceval = candidates.objects.filter(pname=pval, cname=cval).first()
-            ceval.delete()
-            msg = f'{ cval } is removed from the position { pval }'
+            voter = request.POST['voter']
+            voter = User.objects.filter(username=voter).first()
+
 
 
     context = {
@@ -79,4 +114,4 @@ def vadmin(request):
         'users': User.objects.all(),
         'msg': msg
     }
-    return render(request, 'voting/vadmin.html', context)
+    return render(request, 'voting/cdel.html', context)

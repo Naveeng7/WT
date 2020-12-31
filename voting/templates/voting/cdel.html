@@ -1,49 +1,25 @@
 {% extends "news/base.html" %}
 
 {% block content %}
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <div>
-<!--        <form method="POST" action = "{% url 'vadmin' %}">-->
-<!--            {% csrf_token %}-->
-<!--            <select name="candel" >-->
-<!--                <option selected disabled>Select Position</option>-->
-<!--                {% for pos in positions %}-->
-<!--                    <option value="{{ pos.pname }}">{{ pos.pname|capfirst }}</option>-->
-<!--                {% endfor %}-->
-<!--            </select>-->
-<!--            <select name="canddel" >-->
-<!--                <option selected disabled>Select Position</option>-->
-<!--                {% for u in users %}-->
-<!--                    <option value="{{ u.username }}">{{ u.username|capfirst }}</option>-->
-<!--                {% endfor %}-->
-<!--            </select>-->
-<!--            <input type="submit" value="Delete candidate">-->
-<!--        </form>-->
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
     <div class="m-4 d-flex justify-content-center">
-        <form method="POST" action = "{% url 'vadmin' %}">
+        <form method="POST" action = "{% url 'delcand' %}">
             {% csrf_token %}
-            <select name="delval" >
+            <select name="candel" >
                 <option selected disabled>Choose Position </option>
                 {% for pos in positions %}
                     <option value="{{ pos.pname }}">{{ pos.pname|capfirst }}</option>
                 {% endfor %}
             </select>
-            <input type = "submit" value="Submit">
+            <input type = "submit" value="Delete">
         </form>
     </div>
 
         <div class="mt-4">
+            <fieldset class="fs-3">The Currently selected Position in: {{ pval|capfirst }}</fieldset>
 
-            <form method="POST" action = "{% url 'vadmin' %}" name="cform">
+
+
+            <form method="POST" action = "{% url 'delcand' %}">
                 {% csrf_token %}
 
             <table class="table table-sm">
@@ -53,7 +29,7 @@
                             <tr>
                                 <th scope="col">Positions</th>
                                 <th scope="col">Candidates</th>
-                                <th scope="col">Delete this person</th>
+                                <th scope="col">Remove this person</th>
                             </tr>
                         </thead>
                         <tbody class="align-middle">
@@ -64,13 +40,13 @@
                                 <td>{{ can.id }}</td>
                                 <td>{{ can.cname|capfirst }}</td>
                                 <td>
-                                    <input class="form-check-input" type="radio" name="canddel" id="{{can.cname}}" value="{{ can.cname }}">
-                                    <input type="hidden" name="caddel" value="{{ can.pname }}">
+                                    <input class="form-check-input" type="radio" name="canval" id="{{can.cname}}" value="{{ can.cname }}">
+                                    <input type="hidden" name="posval" value="{{ can.pname }}">
                                     <input type="hidden" name="voter" value="{{ user.username }}">
                                     <label class="form-check-label" for="{{can.cname}}">Remove</label>
                                 </td>
                                 <td>
-                                    <input type="submit" value="submit" />
+                                    <input type="submit" value="Remove" />
                                 </td>
                             </tr>
 
@@ -80,6 +56,7 @@
 
                   </tbody>
                 </table>
+                    <h1>{{ msg }}</h1>
         </div>
-    <h1>{{ msg }}</h1>
+
 {% endblock %}
