@@ -19,5 +19,25 @@
             <input type="submit" value="Add candidate">
         </form>
     </div>
+    <div>
+        <table class="table table-info">
+            <thead>
+            <tr>
+                <td><p class="d-flex justify-content-center">Candidate Name</p></td>
+                <td><p class="d-flex justify-content-center">Positions Name</p></td>
+            </tr>
+            </thead>
+            {% for c in candidates %}
+                <tr>
+                    <td>
+                        <p class="d-flex justify-content-center">{{ c.pname }}</p>
+                    </td>
+                    <td>
+                        <p class="d-flex justify-content-center">{{ c.cname }}</p>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 <h1>{{ msg }}</h1>
 {% endblock %}
