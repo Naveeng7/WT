@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import profile
 
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     voter_id = forms.CharField(max_length=10, min_length=10)

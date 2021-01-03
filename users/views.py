@@ -4,6 +4,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm,UserUpdateForm,ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 def register(request):
@@ -40,3 +41,19 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'users/profile.html', content)
+
+def ChangePassword(request):
+    if request.method == 'POST':
+        p1 = request.POST['password1']
+        p2 = request.POST['password2']
+        if len(p1) < 6 or len(p2) < 6:
+            messages.error(request, f'Weak or Password did not match')
+            redirect('chngpass')
+        elif p1 == p2 and len(p1) > 6:
+            u = request.user
+            u.set_password(p1)
+            u.save()
+            messages.success(request, f'Password Changed Successfully, Please Login')
+            return redirect('login')
+
+    return render(request, 'users/chngpass.html')

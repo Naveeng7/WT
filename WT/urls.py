@@ -32,7 +32,8 @@ urlpatterns = [
     path('addndel', v_views.mpos, name='addndel'),
     path('cadd', v_views.cadd, name='addcand'),
     path('cdel', v_views.cdel, name='delcand'),
-    path('pollres', v_views.cres, name='rescand')
+    path('pollres', v_views.cres, name='rescand'),
+    path('changepassword', u_views.ChangePassword, name='chngpass')
 ]
 
 
