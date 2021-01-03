@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.contrib.auth.models import Permission
 
 # Create your models here.
 class profile(models.Model):
@@ -12,6 +13,9 @@ class profile(models.Model):
         return f'{self.user.username} profile'
 
     def save(self, *args, **kwargs):
+        # cper = User.objects.filter(username=self.user).first()
+        # permis = Permission.objects.get(name='Can add post')
+        # cper.user_permission.remove(permis)
         super(profile, self).save(*args, **kwargs)
 
         img = Image.open(self.image.path)

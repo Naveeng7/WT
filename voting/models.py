@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Permission
 
 # Create your models here.
 class positions(models.Model):
@@ -26,11 +27,14 @@ class candidates(models.Model):
         return f'{self.pname,self.cname,self.cvotes}'
 
     def save(self, *args, **kwargs):
+        cpval = User.objects.filter(username=self.cname).first()
         cvals = candidates.objects.all()
         for c in cvals:
             if c.cname == self.cname and c.pname == self.pname:
                 return f'The candidate { self.cname } is already standing for this position { self.pname }'
         super(candidates, self).save(*args, **kwargs)
+        # permis = Permission.objects.get(name='Can add post')
+        # cpval.user_permissions.add(permis)
         return f'candidates { self.cname } is competing for the position { self.pname }'
 
 
