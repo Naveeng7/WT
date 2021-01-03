@@ -42,12 +42,13 @@ def profile(request):
     }
     return render(request, 'users/profile.html', content)
 
+@login_required
 def ChangePassword(request):
     if request.method == 'POST':
         p1 = request.POST['password1']
         p2 = request.POST['password2']
         if len(p1) < 6 or len(p2) < 6:
-            messages.error(request, f'Weak or Password did not match')
+            messages.success(request, f'Weak or Passwords did not match')
             redirect('chngpass')
         elif p1 == p2 and len(p1) > 6:
             u = request.user
