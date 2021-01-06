@@ -4,14 +4,14 @@
     <div class="m-4 d-flex justify-content-center">
         <form method="POST" action = "{% url 'addcand' %}">
             {% csrf_token %}
-            <select name="canadd" >
+            <select class="btn border-info" name="canadd" >
                 <option selected disabled>Select Position</option>
                 {% for pos in positions %}
                     <option value="{{ pos.pname }}">{{ pos.pname|capfirst }}</option>
                 {% endfor %}
             </select>
-            <select name="candadd" >
-                <option selected disabled>Select Position</option>
+            <select class="btn border-info" name="candadd" >
+                <option selected disabled>Select Candidate</option>
                 {% for u in users %}
                     <option value="{{ u.username }}">{{ u.username|capfirst }}</option>
                 {% endfor %}

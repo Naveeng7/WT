@@ -4,7 +4,7 @@
     <div class="m-4 d-flex justify-content-center">
         <form method="POST" action = "{% url 'rescand' %}">
             {% csrf_token %}
-            <select name="canpos" >
+            <select class="btn border border-success" name="canpos" >
                 <option selected disabled>Choose Position </option>
                 {% for pos in positions %}
                     <option value="{{ pos.pname }}">{{ pos.pname|capfirst }}</option>
@@ -16,41 +16,34 @@
 
         <div class="mt-4">
             <fieldset class="fs-3">The Currently selected Position in: {{ canpos|capfirst }}</fieldset>
-
-
-
-            <form method="POST" action = "{% url 'rescand' %}">
+                <form method="POST" action = "{% url 'rescand' %}">
                 {% csrf_token %}
-
-            <table class="table table-sm">
-                <div class="table-responsive">
-                    <table class=" table align-middle">
-                        <thead>
-                            <tr>
-                                <th scope="col">Positions</th>
-                                <th scope="col">Candidates</th>
-                                <th scope="col">Votes</th>
-                            </tr>
-                        </thead>
-                        <tbody class="align-middle">
-                        {% for can in candidates %}
-                            {% if canpos == can.pname %}
-
-                            <tr class="align-middle">
-                                <td>{{ can.id }}</td>
-                                <td>{{ can.cname|capfirst }}</td>
-                                <td>
-                                    {{ can.cvotes }}
-                                </td>
-                            </tr>
-
-                        </form>
-                            {% endif %}
-                        {% endfor %}
-
-                  </tbody>
-                </table>
-                    <h1>{{ msg }}</h1>
+                    <table class="table table-sm">
+                        <div class="table-responsive">
+                            <table class=" table align-middle">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Positions</th>
+                                    <th scope="col">Candidates</th>
+                                    <th scope="col">Votes</th>
+                                </tr>
+                                </thead>
+                                <tbody class="align-middle">
+                                {% for can in candidates %}
+                                    {% if canpos == can.pname %}
+                                        <tr class="align-middle">
+                                            <td>{{ can.id }}</td>
+                                            <td>{{ can.cname|capfirst }}</td>
+                                            <td>{{ can.cvotes }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </table>
+                </form>
+            <h1>{{ msg }}</h1>
         </div>
 
 {% endblock %}
