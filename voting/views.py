@@ -4,13 +4,13 @@ from voting.models import candidates
 from django.contrib.auth.models import User
 from voting.models import voted
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
 
 # Create your views here.
 @login_required()
 def voting(request):
     pval = None
     ceval = None
-    msg = ''
     if request.method == 'POST':
         if 'posval' in request.POST:
             pval = request.POST['posval']
@@ -28,16 +28,15 @@ def voting(request):
             yo = v1.save()
             if yo == True:
                 candidates.objects.filter(id=ceval.id).update(cvotes=ceval.cvotes + 1)
-                msg = f'You have successfully voted { cval } for the posistion { pval }'
+                messages.info(request, f'You have successfully voted { cval } for the posistion { pval }')
             else:
-                msg = f'You have already voted for the posistion { pval }'
+                messages.info(request, f'You have already voted for the posistion { pval }')
 
     context = {
         'positions': positions.objects.all(),
         'candidates': candidates.objects.all(),
         'pval': pval,
-        'ceval': ceval,
-        'msg': msg
+        'ceval': ceval
     }
     return render(request, 'voting/v_base.html', context)
 
@@ -52,8 +51,10 @@ def mpos(request):
             pval = positions.objects.filter(pname=pval).first()
             pval.delete()
             msg = f'{pval} removed form voting system '
+            messages.info(request, f'{pval} removed form voting system ')
         if 'posadd' in request.POST:
             pval = request.POST['posadd']
+            pval = pval.capitalize()
             pval = positions(pname=pval)
             msg = pval.save()
 

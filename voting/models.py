@@ -35,7 +35,7 @@ class candidates(models.Model):
         super(candidates, self).save(*args, **kwargs)
         # permis = Permission.objects.get(name='Can add post')
         # cpval.user_permissions.add(permis)
-        return f'candidates { self.cname } is competing for the position { self.pname }'
+        return f'candidate { self.cname } is competing for the position { self.pname }'
 
 
 class voted(models.Model):

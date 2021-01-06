@@ -1,0 +1,2 @@
+positions capitalize
+flash msg everywhere to avoid un-relevent msg when refreshed

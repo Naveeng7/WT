@@ -41,8 +41,8 @@
         <div class="m-4 d-flex justify-content-center">
         <form method="POST" action = "{% url 'addndel' %}">
             {% csrf_token %}
-            <select name="posval" >
-                <option  selected disabled>Delete Position</option>
+            <select class="btn border border-warning" name="posval" >
+                <option selected disabled>Delete Position</option>
                 {% for pos in positions %}
                     <option value="{{ pos.pname }}">{{ pos.pname|capfirst }}</option>
                 {% endfor %}
